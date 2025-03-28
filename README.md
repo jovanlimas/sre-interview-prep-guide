@@ -9,8 +9,40 @@ Contributions are always welcome!
 
 ## Basics
 
-- [ ] Simple: [What happens when you type in ‘www.cnn.com’ in your browser?](https://syedali.net/2013/08/18/what-happens-when-you-type-in-www-cnn-com-in-your-browser)
+- [x] Simple: [What happens when you type in ‘www.cnn.com’ in your browser?](https://syedali.net/2013/08/18/what-happens-when-you-type-in-www-cnn-com-in-your-browser)
 - [ ] Detailed: [What happens when you type google.com into your browser's address box and press enter?](https://github.com/alex/what-happens-when)
+
+Summary
+- **DNS Resolution**
+  - Checks browser cache and `etc/hosts` file
+  - Sends queries to DNS Server
+    - Local -> Root (.) -> TLD (.com) -> Authoratative
+- **TCP 3-way Handshake**
+  - Client sends SYN with Initial Sequence Number
+  - Server sends SYN with its own ISN, and ACK with acknowledgment number of client's sequence number + 1
+  - Client sends ACK with acknowledgment number of server's sequence number + 1
+- **TLS Handshake**
+  - `ClientHello` containing:
+    - TLS versions, cipher algorithms, and ClientRandom
+  - `ServerHello` containing:
+    - TLS version, selected cipher, certificate, and ServerRandom
+    - Certificate contains: a public key, identitiy info, CA signature
+  - Client verifies certificate against a list of CAs
+  - Premaster Secret:
+    - Client sends random string of bytes, "premaster secret" encrypted with the public key 
+    - Server decrypts Premaster Secret
+  - Session Keys Generated:
+    - Client and Server generate session keys from ClientRandom, ServerRandom, and Premaster Secret
+  - `Finished`:
+    - Client and Server both sends `Finished` message encrypted with session key
+  - From now on the TLS session transmits the application (HTTP) data encrypted with the agreed symmetric key
+- **HTTP Request**
+  - Client sends GET request
+    - HTTP request includes:
+      - Request Line
+      - Header
+      - Body
+  - Server receives, processes, and sends response
 
 ## Linux
 
