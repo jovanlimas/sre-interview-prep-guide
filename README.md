@@ -53,11 +53,34 @@ Summary
 
 ### Boot Process
 
-- [ ] [How Does Linux Boot Process Work?](https://youtu.be/XpFsMB6FoOs)
-- [ ] [An introduction to the Linux boot and startup processes](https://opensource.com/article/17/2/linux-boot-and-startup)
-- [ ] [What happens when we turn on computer?](https://www.cdn.geeksforgeeks.org/what-happens-when-we-turn-on-computer)
-- [ ] [What happens when we turn on computer?](https://leetcode.com/discuss/interview-question/125107/What-happens-when-we-turn-on-computer)
+- [x] [How Does Linux Boot Process Work?](https://youtu.be/XpFsMB6FoOs)
+- [x] [An introduction to the Linux boot and startup processes](https://opensource.com/article/17/2/linux-boot-and-startup)
+- [x] [What happens when we turn on computer?](https://www.cdn.geeksforgeeks.org/what-happens-when-we-turn-on-computer)
+- [x] [What happens when we turn on computer?](https://leetcode.com/discuss/interview-question/125107/What-happens-when-we-turn-on-computer)
 - [ ] [From Power up to login prompt](http://www.scott-a-s.com/files/linux_boot.pdf)
+
+Summary
+- **BIOS**
+  - performs POST to ensure hardware components are functioning
+  - looks for MBR (first sector of disk) from a list of devices, loads and executes it
+- **MBR** (512 bytes)
+  - runs initial bootloader code (446 bytes)
+  - hands it over to next stage, GRUB
+- **GRUB**
+  - parses its config (`/boot/grub/grub.cfg`)
+  - loads kernel and initial RAM disk (initramfs/initrd) into memory
+- **Kernel**
+  - initializes hardware, set up memory management
+  - mounts temporary root filesystem from initramfs containing necessary drivers to access real root filesystem
+  - switches to real root filesystem
+  - starts init/systemd (PID 1)
+- **Systemd** (PID 1)
+  - mounts filesystems from `/etc/fstab`
+  - Activates default target (`/etc/systemd/system/default.target`)
+    - Targets = what should be active
+    - Dependencies (via Wants=, Requires=, or After=) = order
+    - Systemd starts units in parallel when possible, depending on dependencies
+- **Login Prompt**
 
 ### Filesystem
 
